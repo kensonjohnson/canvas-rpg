@@ -1,6 +1,11 @@
+export type Resource = {
+  image: HTMLImageElement;
+  isLoaded: boolean;
+};
+
 export class Resources {
   toLoad: Record<string, string>;
-  images: Record<string, { image: HTMLImageElement; isLoaded: boolean }>;
+  images: Record<string, Resource>;
 
   constructor() {
     // Everything that we need to download
