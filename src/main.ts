@@ -7,6 +7,7 @@ import { Input } from "./Input";
 import { GameObject } from "./GameObject";
 import { Hero } from "./objects/Hero/Hero";
 import { gridCells } from "./helpers/grid";
+import { events } from "./Events";
 
 // Grab the canvas to draw to
 const canvas = document.querySelector("#game-canvas") as HTMLCanvasElement;
@@ -33,6 +34,10 @@ mainScene.addChild(hero);
 
 // Add an input class to the main scene
 mainScene.input = new Input();
+
+events.on("HERO_POSITION", mainScene, (position: Vector2) => {
+  console.log("HERO MOVED! ", position);
+});
 
 // Establish the update and draw loops
 function update(delta: number) {
