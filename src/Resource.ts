@@ -14,6 +14,7 @@ export class Resources {
       ground: import.meta.env.BASE_URL + "sprites/ground.png",
       hero: import.meta.env.BASE_URL + "sprites/hero-sheet.png",
       shadow: import.meta.env.BASE_URL + "sprites/shadow.png",
+      rod: import.meta.env.BASE_URL + "sprites/rod.png",
     };
 
     // A bucket to store the downloaded images
