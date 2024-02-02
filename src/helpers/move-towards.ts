@@ -1,8 +1,9 @@
-import { Sprite } from "../Sprite";
+import { GameObject } from "@/GameObject";
+
 import { Vector2 } from "../Vector2";
 
 export function moveTowards(
-  person: Sprite,
+  person: GameObject,
   destinationPosition: Vector2,
   speed: number
 ): number {
