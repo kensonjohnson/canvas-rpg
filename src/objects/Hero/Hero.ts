@@ -18,6 +18,7 @@ import { Animations } from "@/Animations";
 import { FrameIndexPattern } from "@/FrameIndexPattern";
 import { moveTowards } from "@/helpers/move-towards";
 import { walls } from "@/levels/level1";
+import { events } from "@/Events";
 
 const { UP, DOWN, LEFT, RIGHT } = Direction;
 
@@ -25,6 +26,9 @@ export class Hero extends GameObject {
   body: Sprite;
   facingDirection: Direction;
   destinationPosition: Vector2;
+  lastX?: number;
+  lastY?: number;
+
   constructor(x: number, y: number) {
     super({
       position: new Vector2(x, y),
@@ -69,6 +73,19 @@ export class Hero extends GameObject {
     if (hasArrived) {
       this.tryMove(root);
     }
+
+    this.tryEmitPosition();
+  }
+
+  tryEmitPosition() {
+    if (this.lastX === this.position.x && this.lastY === this.position.y) {
+      return;
+    }
+
+    this.lastX = this.position.x;
+    this.lastY = this.position.y;
+
+    events.emit("HERO_POSITION", this.position);
   }
 
   tryMove(root: GameObject) {
