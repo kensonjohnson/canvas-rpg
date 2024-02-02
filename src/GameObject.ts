@@ -3,7 +3,6 @@ import { Vector2 } from "./Vector2";
 
 type GameObjectConfig = {
   position?: Vector2;
-  children?: GameObject[];
 };
 
 export class GameObject {
