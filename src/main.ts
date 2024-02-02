@@ -4,6 +4,8 @@ import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector2";
 import { GameLoop } from "./GameLoop";
 import { Direction, Input } from "./Input";
+import { gridCells } from "./helpers/grid";
+import { moveTowards } from "./helpers/move-towards";
 
 const { UP, DOWN, LEFT, RIGHT } = Direction;
 
@@ -26,43 +28,64 @@ const hero = new Sprite({
   hframes: 3,
   vframes: 8,
   frame: 1,
+  position: new Vector2(gridCells(6), gridCells(5)),
 });
+
+const heroDestinationPosition = hero.position.duplicate();
 
 const shadow = new Sprite({
   resource: resources.images.shadow,
   frameSize: new Vector2(32, 32),
 });
 
-const heroPosition = new Vector2(16 * 6, 16 * 5);
 const heroOffset = new Vector2(-8, -21);
 
 const input = new Input();
 
 function update() {
+  const distance = moveTowards(hero, heroDestinationPosition, 1);
+  const hasArrived = distance <= 1;
+  // Attempt to move again if the hero is at his position
+  if (hasArrived) {
+    tryMove();
+  }
+}
+
+function tryMove() {
+  if (!input.direction) return;
+
+  let nextX = heroDestinationPosition.x;
+  let nextY = heroDestinationPosition.y;
+  const gridSize = 16;
+
   if (input.direction === DOWN) {
-    heroPosition.y += 1;
+    nextY += gridSize;
     hero.frame = 0;
   }
   if (input.direction === UP) {
-    heroPosition.y -= 1;
+    nextY -= gridSize;
     hero.frame = 6;
   }
   if (input.direction === LEFT) {
-    heroPosition.x -= 1;
+    nextX -= gridSize;
     hero.frame = 9;
   }
   if (input.direction === RIGHT) {
-    heroPosition.x += 1;
+    nextX += gridSize;
     hero.frame = 3;
   }
+
+  // TODO: Check if the next position is free
+  heroDestinationPosition.x = nextX;
+  heroDestinationPosition.y = nextY;
 }
 
 function draw() {
   skySprite.drawImage(ctx, 0, 0);
   groundSprite.drawImage(ctx, 0, 0);
 
-  const heroPositionX = heroPosition.x + heroOffset.x;
-  const heroPositionY = heroPosition.y + heroOffset.y;
+  const heroPositionX = hero.position.x + heroOffset.x;
+  const heroPositionY = hero.position.y + heroOffset.y;
 
   shadow.drawImage(ctx, heroPositionX, heroPositionY);
   hero.drawImage(ctx, heroPositionX, heroPositionY);
