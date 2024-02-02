@@ -1,4 +1,5 @@
 import { Animations } from "./Animations";
+import { GameObject } from "./GameObject";
 import type { Resource } from "./Resource";
 
 import { Vector2 } from "./Vector2";
@@ -14,7 +15,7 @@ type SpriteOptions = {
   animations?: Animations;
 };
 
-export class Sprite {
+export class Sprite extends GameObject {
   resource: Resource;
   frameSize: Vector2;
   hframes: number;
@@ -35,6 +36,7 @@ export class Sprite {
     position, // where to draw the image
     animations,
   }: SpriteOptions) {
+    super({});
     this.resource = resource;
     this.frameSize = frameSize ?? new Vector2(16, 16);
     this.hframes = hframes ?? 1;
