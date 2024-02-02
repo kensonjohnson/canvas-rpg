@@ -3,6 +3,9 @@ import { resources } from "./Resource";
 import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector2";
 import { GameLoop } from "./GameLoop";
+import { Direction, Input } from "./Input";
+
+const { UP, DOWN, LEFT, RIGHT } = Direction;
 
 const canvas = document.querySelector("#game-canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -33,8 +36,25 @@ const shadow = new Sprite({
 const heroPosition = new Vector2(16 * 6, 16 * 5);
 const heroOffset = new Vector2(-8, -21);
 
+const input = new Input();
+
 function update() {
-  // This is for updating entities in the game
+  if (input.direction === DOWN) {
+    heroPosition.y += 1;
+    hero.frame = 0;
+  }
+  if (input.direction === UP) {
+    heroPosition.y -= 1;
+    hero.frame = 6;
+  }
+  if (input.direction === LEFT) {
+    heroPosition.x -= 1;
+    hero.frame = 9;
+  }
+  if (input.direction === RIGHT) {
+    heroPosition.x += 1;
+    hero.frame = 3;
+  }
 }
 
 function draw() {
