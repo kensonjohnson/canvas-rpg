@@ -4,8 +4,9 @@ import { Sprite } from "./Sprite";
 import { Vector2 } from "./Vector2";
 import { GameLoop } from "./GameLoop";
 import { Direction, Input } from "./Input";
-import { gridCells } from "./helpers/grid";
+import { gridCells, isSpaceFree } from "./helpers/grid";
 import { moveTowards } from "./helpers/move-towards";
+import { walls } from "./levels/level1";
 
 const { UP, DOWN, LEFT, RIGHT } = Direction;
 
@@ -75,9 +76,11 @@ function tryMove() {
     hero.frame = 3;
   }
 
-  // TODO: Check if the next position is free
-  heroDestinationPosition.x = nextX;
-  heroDestinationPosition.y = nextY;
+  // Check if the next position is free
+  if (isSpaceFree(walls, nextX, nextY)) {
+    heroDestinationPosition.x = nextX;
+    heroDestinationPosition.y = nextY;
+  }
 }
 
 function draw() {
