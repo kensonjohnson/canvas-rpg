@@ -8,6 +8,7 @@ import { GameObject } from "./GameObject";
 import { Hero } from "./objects/Hero/Hero";
 import { gridCells } from "./helpers/grid";
 import { Camera } from "./Camera";
+import { Rod } from "./objects/Rod/Rod";
 
 // Grab the canvas to draw to
 const canvas = document.querySelector("#game-canvas") as HTMLCanvasElement;
@@ -33,6 +34,9 @@ mainScene.addChild(hero);
 
 const camera = new Camera();
 mainScene.addChild(camera);
+
+const rod = new Rod(gridCells(7), gridCells(6));
+mainScene.addChild(rod);
 
 // Add an input class to the main scene
 mainScene.input = new Input();
