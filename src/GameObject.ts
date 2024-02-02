@@ -1,3 +1,4 @@
+import { events } from "./Events";
 import { Input } from "./Input";
 import { Vector2 } from "./Vector2";
 
@@ -9,6 +10,7 @@ export class GameObject {
   position: Vector2;
   children: GameObject[];
   input?: Input;
+  parent?: GameObject;
 
   constructor({ position }: GameObjectConfig) {
     this.position = position ?? new Vector2(0, 0);
@@ -40,11 +42,21 @@ export class GameObject {
 
   drawImage(_context: CanvasRenderingContext2D, _x: number, _y: number) {}
 
-  addChild(child: GameObject) {
-    this.children.push(child);
+  destroy() {
+    this.children.forEach((child) => {
+      child.destroy();
+    });
+
+    this.parent?.removeChild(this);
   }
 
-  removeChild(child: GameObject) {
-    this.children = this.children.filter((c) => c !== child);
+  addChild(gameObject: GameObject) {
+    gameObject.parent = this;
+    this.children.push(gameObject);
+  }
+
+  removeChild(gameObject: GameObject) {
+    events.unsubscibe(gameObject);
+    this.children = this.children.filter((child) => child !== gameObject);
   }
 }

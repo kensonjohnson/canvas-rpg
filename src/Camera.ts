@@ -6,8 +6,6 @@ export class Camera extends GameObject {
   constructor() {
     super({});
     events.on("HERO_POSITION", this, (position: Vector2) => {
-      console.log("HERO MOVED! ", position);
-
       const personHalf = 8;
       const canvasWidth = 320;
       const canvasHeight = 180;

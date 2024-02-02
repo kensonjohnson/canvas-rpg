@@ -9,10 +9,11 @@ import {
   STAND_UP,
   STAND_LEFT,
   STAND_DOWN,
+  PICK_UP_DOWN,
 } from "./hero-animations";
 import { Direction } from "@/Input";
 import { Sprite } from "@/Sprite";
-import { resources } from "@/Resource";
+import { Resource, resources } from "@/Resource";
 import { isSpaceFree } from "@/helpers/grid";
 import { Animations } from "@/Animations";
 import { FrameIndexPattern } from "@/FrameIndexPattern";
@@ -28,6 +29,8 @@ export class Hero extends GameObject {
   destinationPosition: Vector2;
   lastX?: number;
   lastY?: number;
+  itemPickupTime: number;
+  itemPickupShell?: GameObject;
 
   constructor(x: number, y: number) {
     super({
@@ -58,15 +61,27 @@ export class Hero extends GameObject {
         standUp: new FrameIndexPattern(STAND_UP),
         standLeft: new FrameIndexPattern(STAND_LEFT),
         standRight: new FrameIndexPattern(STAND_RIGHT),
+        pickUpDown: new FrameIndexPattern(PICK_UP_DOWN),
       }),
     });
     this.addChild(this.body);
 
     this.facingDirection = DOWN;
     this.destinationPosition = this.position.duplicate();
+    this.itemPickupTime = 0;
+
+    events.on("HERO_PICKS_UP_ITEM", this, (data: any) => {
+      this.onPickupItem(data);
+    });
   }
 
-  step(_delta: number, root: GameObject): void {
+  step(delta: number, root: GameObject): void {
+    // Lock movement while picking up an item
+    if (this.itemPickupTime > 0) {
+      this.workOnItemPickup(delta);
+      return;
+    }
+
     const distance = moveTowards(this, this.destinationPosition, 1);
     const hasArrived = distance <= 1;
     // Attempt to move again if the hero is at his position
@@ -134,6 +149,34 @@ export class Hero extends GameObject {
     if (isSpaceFree(walls, nextX, nextY)) {
       this.destinationPosition.x = nextX;
       this.destinationPosition.y = nextY;
+    }
+  }
+
+  onPickupItem({ image, position }: { image: Resource; position: Vector2 }) {
+    // Make sure we land right on the item
+    this.destinationPosition = position.duplicate();
+
+    // Start the pickup animation
+    this.itemPickupTime = 500;
+
+    this.itemPickupShell = new GameObject({});
+    this.itemPickupShell.addChild(
+      new Sprite({
+        resource: image,
+        position: new Vector2(0, -18),
+      })
+    );
+    this.addChild(this.itemPickupShell);
+  }
+
+  workOnItemPickup(delta: number) {
+    this.itemPickupTime -= delta;
+    this.body.animations?.play("pickUpDown");
+
+    // Remove the item after the pickup time
+    if (this.itemPickupTime <= 0) {
+      this.itemPickupShell?.destroy();
+      this.itemPickupShell = undefined;
     }
   }
 }
