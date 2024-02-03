@@ -4,14 +4,14 @@ import { Input } from "@/Input";
 import { Level } from "../Level/Level";
 import { Inventory } from "../Inventory/Inventory";
 import { events } from "@/Events";
-import { TextBox } from "../TextBox/TextBox";
+import { SpriteTextString } from "../SpriteTextString/SpriteTextString";
 
 export class Main extends GameObject {
   level?: Level;
   input: Input;
   camera: Camera;
   inventory: Inventory;
-  textBox: TextBox;
+  textBox: any;
 
   constructor(config: GameObjectConfig = {}) {
     super(config);
@@ -19,7 +19,9 @@ export class Main extends GameObject {
     this.input = new Input();
     this.camera = new Camera();
     this.inventory = new Inventory();
-    this.textBox = new TextBox();
+    this.textBox = new SpriteTextString(
+      "Hi! I'm a text box! I can display text! Some more text to test the line wrapping. I hope it works! I'm not sure if it will! I guess we'll see!"
+    );
   }
 
   ready(): void {
