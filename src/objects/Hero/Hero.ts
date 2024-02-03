@@ -70,6 +70,7 @@ export class Hero extends GameObject {
     this.destinationPosition = this.position.duplicate();
     this.itemPickupTime = 0;
 
+    // React to picking up an item
     events.on("HERO_PICKS_UP_ITEM", this, (data: any) => {
       this.onPickupItem(data);
     });
