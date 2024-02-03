@@ -18,7 +18,7 @@ import { isSpaceFree } from "@/helpers/grid";
 import { Animations } from "@/Animations";
 import { FrameIndexPattern } from "@/FrameIndexPattern";
 import { moveTowards } from "@/helpers/move-towards";
-import { walls } from "@/levels/level1";
+import { walls } from "@/levels/OutdoorLevel1";
 import { events } from "@/Events";
 
 const { UP, DOWN, LEFT, RIGHT } = Direction;
