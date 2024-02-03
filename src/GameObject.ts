@@ -2,7 +2,7 @@ import { events } from "./Events";
 import { Input } from "./Input";
 import { Vector2 } from "./Vector2";
 
-type GameObjectConfig = {
+export type GameObjectConfig = {
   position?: Vector2;
 };
 
