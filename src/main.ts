@@ -10,6 +10,8 @@ import { gridCells } from "./helpers/grid";
 import { Camera } from "./Camera";
 import { Rod } from "./objects/Rod/Rod";
 import { Inventory } from "./objects/Inventory/Inventory";
+import { Exit } from "./objects/Exit/Exit";
+import { events } from "./Events";
 
 // Grab the canvas to draw to
 const canvas = document.querySelector("#game-canvas") as HTMLCanvasElement;
@@ -30,6 +32,9 @@ const groundSprite = new Sprite({
 });
 mainScene.addChild(groundSprite);
 
+const exit = new Exit(gridCells(6), gridCells(3));
+mainScene.addChild(exit);
+
 const hero = new Hero(gridCells(6), gridCells(5));
 mainScene.addChild(hero);
 
@@ -43,6 +48,10 @@ const inventory = new Inventory();
 
 // Add an input class to the main scene
 mainScene.input = new Input();
+
+events.on("HERO_EXITS", mainScene, () => {
+  console.log("Change level");
+});
 
 // Establish the update and draw loops
 function update(delta: number) {
