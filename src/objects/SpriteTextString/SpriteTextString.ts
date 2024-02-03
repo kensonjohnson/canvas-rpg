@@ -3,6 +3,7 @@ import { resources } from "@/Resource";
 import { Sprite } from "@/Sprite";
 import { Vector2 } from "@/Vector2";
 import { getCharWidth, getCharacterFrame } from "./ExpressionFontMap";
+import { events } from "@/Events";
 
 export class SpriteTextString extends GameObject {
   backdrop: Sprite;
@@ -14,6 +15,7 @@ export class SpriteTextString extends GameObject {
     }[];
   }[];
   showingIndex: number;
+  finalIndex: number;
   textSpeed: number;
   timeUntilNextShow: number;
 
@@ -55,15 +57,30 @@ export class SpriteTextString extends GameObject {
 
     // Typewriter
     this.showingIndex = 0;
-    this.textSpeed = 80;
+    this.finalIndex = content.replace(/\s/g, "").length;
+    this.textSpeed = 30;
     this.timeUntilNextShow = this.textSpeed;
   }
 
-  step(delta: number, _root: GameObject): void {
+  step(delta: number, root: GameObject): void {
+    // Listen for user input
+    const input = root.input;
+    if (input?.getActionJustPressed("Space")) {
+      if (this.showingIndex < this.finalIndex) {
+        // Skip
+        this.showingIndex = this.finalIndex;
+        return;
+      }
+
+      // Destroy the text box
+      events.emit("END_TEXT_BOX");
+    }
+
+    // Work on the typewriter effect
     this.timeUntilNextShow -= delta;
     if (this.timeUntilNextShow <= 0) {
       // Increase amount of characters that are drawn
-      this.showingIndex += 7;
+      this.showingIndex++;
 
       // Reset the counter for the next character
       this.timeUntilNextShow = this.textSpeed;
