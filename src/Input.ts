@@ -8,10 +8,16 @@ export enum Direction {
 
 export class Input {
   heldDirection: Direction[];
+  keys: Record<string, boolean>;
+  lastKeys: Record<string, boolean>;
+
   constructor() {
     this.heldDirection = [];
-
+    this.keys = {};
+    this.lastKeys = {};
     document.addEventListener("keydown", (event) => {
+      this.keys[event.code] = true;
+
       if (event.code === "ArrowUp" || event.code === "KeyW") {
         this.onArrowPressed(Direction.UP);
       }
@@ -27,6 +33,8 @@ export class Input {
     });
 
     document.addEventListener("keyup", (event) => {
+      this.keys[event.code] = false;
+
       if (event.code === "ArrowUp" || event.code === "KeyW") {
         this.onArrowReleased(Direction.UP);
       }
@@ -44,6 +52,20 @@ export class Input {
 
   get direction() {
     return this.heldDirection[0];
+  }
+
+  update() {
+    // Diff the keys on the previous frame to
+    // know when new ones are pressed
+    this.lastKeys = { ...this.keys };
+  }
+
+  getActionJustPressed(keyCode: string) {
+    let justPressed = false;
+    if (this.keys[keyCode] && !this.lastKeys[keyCode]) {
+      justPressed = true;
+    }
+    return justPressed;
   }
 
   onArrowPressed(direction: Direction) {
