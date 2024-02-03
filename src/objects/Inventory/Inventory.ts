@@ -19,7 +19,7 @@ export class Inventory extends GameObject {
     ];
 
     // React to hero picking up an item
-    events.on("HERO_PICKS_UP_ITEM", this, (data: any) => {
+    events.on("HERO_PICKS_UP_ITEM", this, (_data: any) => {
       this.nextId++;
       this.items.push({
         id: this.nextId,
