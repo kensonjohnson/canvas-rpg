@@ -1,17 +1,18 @@
 import { events } from "@/Events";
-import { GameObjectConfig } from "@/GameObject";
 import { resources } from "@/Resource";
 import { Sprite } from "@/Sprite";
 import { Vector2 } from "@/Vector2";
 import { gridCells } from "@/helpers/grid";
 import { Exit } from "@/objects/Exit/Exit";
 import { Hero } from "@/objects/Hero/Hero";
-import { Level } from "@/objects/Level/Level";
+import { Level, LevelConfig } from "@/objects/Level/Level";
 import { Rod } from "@/objects/Rod/Rod";
 import { CaveLevel1 } from "./CaveLevel1";
 
+const DEFAULT_HERO_POSITION = new Vector2(gridCells(6), gridCells(5));
+
 export class OutdoorLevel1 extends Level {
-  constructor(config: GameObjectConfig = {}) {
+  constructor(config: LevelConfig = {}) {
     super(config);
     this.background = new Sprite({
       resource: resources.images.sky,
@@ -27,7 +28,8 @@ export class OutdoorLevel1 extends Level {
     const exit = new Exit(gridCells(6), gridCells(3));
     this.addChild(exit);
 
-    const hero = new Hero(gridCells(6), gridCells(5));
+    this.heroPosition = config.heroPosition || DEFAULT_HERO_POSITION;
+    const hero = new Hero(this.heroPosition.x, this.heroPosition.y);
     this.addChild(hero);
 
     const rod = new Rod(gridCells(7), gridCells(6));
@@ -48,7 +50,12 @@ export class OutdoorLevel1 extends Level {
 
   ready(): void {
     events.on("HERO_EXITS", this, () => {
-      events.emit("CHANGE_LEVEL", new CaveLevel1());
+      events.emit(
+        "CHANGE_LEVEL",
+        new CaveLevel1({
+          heroPosition: new Vector2(gridCells(4), gridCells(5)),
+        })
+      );
     });
   }
 }
