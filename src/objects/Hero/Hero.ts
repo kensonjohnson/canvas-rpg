@@ -31,6 +31,7 @@ export class Hero extends GameObject {
   lastY?: number;
   itemPickupTime: number;
   itemPickupShell?: GameObject;
+  isLocked: boolean;
 
   constructor(x: number, y: number) {
     super({
@@ -69,6 +70,7 @@ export class Hero extends GameObject {
     this.facingDirection = DOWN;
     this.destinationPosition = this.position.duplicate();
     this.itemPickupTime = 0;
+    this.isLocked = false;
 
     // React to picking up an item
     events.on("HERO_PICKS_UP_ITEM", this, (data: any) => {
@@ -76,11 +78,31 @@ export class Hero extends GameObject {
     });
   }
 
+  ready(): void {
+    events.on("START_TEXT_BOX", this, () => {
+      this.isLocked = true;
+    });
+    events.on("END_TEXT_BOX", this, () => {
+      this.isLocked = false;
+    });
+  }
+
   step(delta: number, root: Main): void {
+    // Do nothing when locked
+    if (this.isLocked) {
+      return;
+    }
+
     // Lock movement while picking up an item
     if (this.itemPickupTime > 0) {
       this.workOnItemPickup(delta);
       return;
+    }
+
+    const input = root.input;
+    if (input.getActionJustPressed("Space")) {
+      console.log("Action");
+      events.emit("HERO_REQUESTS_ACTION");
     }
 
     const distance = moveTowards(this, this.destinationPosition, 1);
