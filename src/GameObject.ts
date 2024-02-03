@@ -12,11 +12,16 @@ export class GameObject {
   hasReadyBeenCalled: boolean;
   input?: Input;
   parent?: GameObject;
+  isSolid: boolean;
+  drawLayer?: string;
 
   constructor({ position }: GameObjectConfig) {
     this.position = position ?? new Vector2(0, 0);
     this.children = [];
     this.hasReadyBeenCalled = false;
+    this.input = undefined;
+    this.isSolid = false;
+    this.drawLayer = undefined;
   }
 
   stepEntry(delta: number, root: GameObject) {
@@ -50,8 +55,15 @@ export class GameObject {
     this.drawImage(context, drawPositionX, drawPositionY);
 
     // Pass on to children
-    this.children.forEach((child) => {
+    this.getDrawChildrenOrdered().forEach((child) => {
       child.draw(context, drawPositionX, drawPositionY);
+    });
+  }
+
+  getDrawChildrenOrdered() {
+    return [...this.children].sort((a, b) => {
+      if (b.drawLayer === "FLOOR") return 1;
+      return a.position.y > b.position.y ? 1 : -1;
     });
   }
 
