@@ -18,8 +18,8 @@ import { isSpaceFree } from "@/helpers/grid";
 import { Animations } from "@/Animations";
 import { FrameIndexPattern } from "@/FrameIndexPattern";
 import { moveTowards } from "@/helpers/move-towards";
-import { walls } from "@/levels/OutdoorLevel1";
 import { events } from "@/Events";
+import { Main } from "../Main/Main";
 
 const { UP, DOWN, LEFT, RIGHT } = Direction;
 
@@ -76,7 +76,7 @@ export class Hero extends GameObject {
     });
   }
 
-  step(delta: number, root: GameObject): void {
+  step(delta: number, root: Main): void {
     // Lock movement while picking up an item
     if (this.itemPickupTime > 0) {
       this.workOnItemPickup(delta);
@@ -104,7 +104,7 @@ export class Hero extends GameObject {
     events.emit("HERO_POSITION", this.position);
   }
 
-  tryMove(root: GameObject) {
+  tryMove(root: Main) {
     const { input } = root;
     if (!input?.direction) {
       if (this.facingDirection === DOWN) {
@@ -147,7 +147,7 @@ export class Hero extends GameObject {
     this.facingDirection = input.direction ?? this.facingDirection;
 
     // Check if the next position is free
-    if (isSpaceFree(walls, nextX, nextY)) {
+    if (isSpaceFree(root.level?.walls!, nextX, nextY)) {
       this.destinationPosition.x = nextX;
       this.destinationPosition.y = nextY;
     }
