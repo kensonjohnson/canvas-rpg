@@ -9,20 +9,35 @@ type GameObjectConfig = {
 export class GameObject {
   position: Vector2;
   children: GameObject[];
+  hasReadyBeenCalled: boolean;
   input?: Input;
   parent?: GameObject;
 
   constructor({ position }: GameObjectConfig) {
     this.position = position ?? new Vector2(0, 0);
     this.children = [];
+    this.hasReadyBeenCalled = false;
   }
 
   stepEntry(delta: number, root: GameObject) {
+    // Call updates on all the children first
     this.children.forEach((child) => {
       child.stepEntry(delta, root);
     });
 
+    // Call ready on the first step
+    if (!this.hasReadyBeenCalled) {
+      this.hasReadyBeenCalled = true;
+      this.ready();
+    }
+
+    // Call any implemented step code
     this.step(delta, root);
+  }
+
+  // Called before the first step
+  ready() {
+    //...
   }
 
   step(_delta: number, _root: GameObject) {}

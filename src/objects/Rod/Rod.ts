@@ -14,7 +14,9 @@ export class Rod extends GameObject {
       position: new Vector2(0, -5), // Nudge it up visually
     });
     this.addChild(sprite);
+  }
 
+  ready() {
     events.on("HERO_POSITION", this, (position: Vector2) => {
       const roundedHeroPositionX = Math.round(position.x);
       const roundedHeroPositionY = Math.round(position.y);
