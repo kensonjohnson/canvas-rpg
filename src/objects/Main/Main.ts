@@ -4,12 +4,14 @@ import { Input } from "@/Input";
 import { Level } from "../Level/Level";
 import { Inventory } from "../Inventory/Inventory";
 import { events } from "@/Events";
+import { TextBox } from "../TextBox/TextBox";
 
 export class Main extends GameObject {
   level?: Level;
   input: Input;
   camera: Camera;
   inventory: Inventory;
+  textBox: TextBox;
 
   constructor(config: GameObjectConfig = {}) {
     super(config);
@@ -17,6 +19,7 @@ export class Main extends GameObject {
     this.input = new Input();
     this.camera = new Camera();
     this.inventory = new Inventory();
+    this.textBox = new TextBox();
   }
 
   ready(): void {
@@ -43,6 +46,11 @@ export class Main extends GameObject {
       context,
       this.inventory.position.x,
       this.inventory.position.y
+    );
+    this.textBox.drawImage(
+      context,
+      this.textBox.position.x,
+      this.textBox.position.y
     );
   }
 }
