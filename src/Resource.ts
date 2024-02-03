@@ -11,7 +11,6 @@ export class Resources {
     // Everything that we need to download
     this.toLoad = {
       hero: import.meta.env.BASE_URL + "sprites/hero-sheet.png",
-      knight: import.meta.env.BASE_URL + "sprites/knight-sheet.png",
       portraits: import.meta.env.BASE_URL + "sprites/portraits-sheet.png",
       shadow: import.meta.env.BASE_URL + "sprites/shadow.png",
       rod: import.meta.env.BASE_URL + "sprites/rod.png",
@@ -23,6 +22,8 @@ export class Resources {
       // Cave
       cave: import.meta.env.BASE_URL + "sprites/cave.png",
       caveGround: import.meta.env.BASE_URL + "sprites/cave-ground.png",
+      // NPCs
+      knight: import.meta.env.BASE_URL + "sprites/knight-sheet.png",
     };
 
     // A bucket to store the downloaded images
