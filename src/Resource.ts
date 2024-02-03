@@ -10,11 +10,19 @@ export class Resources {
   constructor() {
     // Everything that we need to download
     this.toLoad = {
-      sky: import.meta.env.BASE_URL + "sprites/sky.png",
-      ground: import.meta.env.BASE_URL + "sprites/ground.png",
       hero: import.meta.env.BASE_URL + "sprites/hero-sheet.png",
+      knight: import.meta.env.BASE_URL + "sprites/knight-sheet.png",
+      portraits: import.meta.env.BASE_URL + "sprites/portraits-sheet.png",
       shadow: import.meta.env.BASE_URL + "sprites/shadow.png",
       rod: import.meta.env.BASE_URL + "sprites/rod.png",
+      exit: import.meta.env.BASE_URL + "sprites/exit.png",
+
+      // Outdoor
+      sky: import.meta.env.BASE_URL + "sprites/sky.png",
+      ground: import.meta.env.BASE_URL + "sprites/ground.png",
+      // Cave
+      cave: import.meta.env.BASE_URL + "sprites/cave.png",
+      caveGround: import.meta.env.BASE_URL + "sprites/cave-ground.png",
     };
 
     // A bucket to store the downloaded images
