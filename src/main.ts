@@ -15,6 +15,8 @@ mainScene.setLevel(new OutdoorLevel1());
 // Establish the update and draw loops
 function update(delta: number) {
   mainScene.stepEntry(delta, mainScene);
+  // This has to come after the stepEntry call
+  mainScene.input.update();
 }
 
 function draw() {
