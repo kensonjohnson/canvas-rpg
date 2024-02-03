@@ -11,7 +11,7 @@ class Events {
   private callbacks: CallbackObject[] = [];
   private nextId = 0;
 
-  emit(eventName: string, value: any) {
+  emit(eventName: string, value?: any) {
     this.callbacks.forEach((cb) => {
       if (cb.eventName === eventName) {
         cb.callback(value);
