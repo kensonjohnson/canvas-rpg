@@ -19,9 +19,11 @@ export class Main extends GameObject {
     this.input = new Input();
     this.camera = new Camera();
     this.inventory = new Inventory();
+    this.addChild(this.inventory);
     this.textBox = new SpriteTextString(
       "Hi! I'm a text box! I can display text! Some more text to test the line wrapping. I hope it works! I'm not sure if it will! I guess we'll see!"
     );
+    this.addChild(this.textBox);
   }
 
   ready(): void {
@@ -43,16 +45,19 @@ export class Main extends GameObject {
     this.level?.background?.drawImage(context, 0, 0);
   }
 
+  drawObjects(context: CanvasRenderingContext2D) {
+    this.children.forEach((child) => {
+      if (child.drawLayer !== "HUD") {
+        child.draw(context, 0, 0);
+      }
+    });
+  }
+
   drawForeground(context: CanvasRenderingContext2D) {
-    this.inventory.draw(
-      context,
-      this.inventory.position.x,
-      this.inventory.position.y
-    );
-    this.textBox.drawImage(
-      context,
-      this.textBox.position.x,
-      this.textBox.position.y
-    );
+    this.children.forEach((child) => {
+      if (child.drawLayer === "HUD") {
+        child.draw(context, 0, 0);
+      }
+    });
   }
 }

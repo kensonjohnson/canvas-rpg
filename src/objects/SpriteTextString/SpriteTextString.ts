@@ -18,6 +18,9 @@ export class SpriteTextString extends GameObject {
     super({
       position: new Vector2(32, 108),
     });
+
+    this.drawLayer = "HUD";
+
     const content = string ?? "Default text!";
     this.words = content.split(" ").map((word) => {
       let wordWidth = 0;
