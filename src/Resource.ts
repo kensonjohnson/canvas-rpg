@@ -26,6 +26,8 @@ export class Resources {
       knight: import.meta.env.BASE_URL + "sprites/knight-sheet.png",
       // HUD
       textBox: import.meta.env.BASE_URL + "sprites/text-box.png",
+      fontWhite: import.meta.env.BASE_URL + "sprites/sprite-font-white.png",
+      expressionWhite: import.meta.env.BASE_URL + "fonts/expression-white.png",
     };
 
     // A bucket to store the downloaded images
