@@ -24,6 +24,8 @@ export class Resources {
       caveGround: import.meta.env.BASE_URL + "sprites/cave-ground.png",
       // NPCs
       knight: import.meta.env.BASE_URL + "sprites/knight-sheet.png",
+      // HUD
+      textBox: import.meta.env.BASE_URL + "sprites/text-box.png",
     };
 
     // A bucket to store the downloaded images
