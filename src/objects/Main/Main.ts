@@ -21,12 +21,25 @@ export class Main extends GameObject {
   ready(): void {
     const inventory = new Inventory();
     this.addChild(inventory);
-    const textBox = new SpriteTextString(
-      "Hi! I'm a text box! I can display text! Some more text to test the line wrapping. I hope it works! I'm not sure if it will! I guess we'll see!"
-    );
-    this.addChild(textBox);
+
+    // Listen for level changes
     events.on("CHANGE_LEVEL", this, (newLevelInstance: Level) => {
       this.setLevel(newLevelInstance);
+    });
+
+    // Listen for hero action requests
+    events.on("HERO_REQUESTS_ACTION", this, () => {
+      const textBox = new SpriteTextString(
+        "Hi! I'm a text box! I can display text! Some more text to test the line wrapping. I hope it works! I'm not sure if it will! I guess we'll see!"
+      );
+      this.addChild(textBox);
+      events.emit("START_TEXT_BOX");
+
+      // Unsubscribe when the text box is done
+      const endingSub = events.on("END_TEXT_BOX", this, () => {
+        textBox.destroy();
+        events.off(endingSub);
+      });
     });
   }
 
