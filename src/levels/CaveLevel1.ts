@@ -8,6 +8,7 @@ import { Hero } from "@/objects/Hero/Hero";
 import { Level, LevelConfig } from "@/objects/Level/Level";
 import { Rod } from "@/objects/Rod/Rod";
 import { OutdoorLevel1 } from "./OutdoorLevel1";
+import { NPC } from "@/objects/NPC/NPC";
 
 const DEFAULT_HERO_POSITION = new Vector2(gridCells(6), gridCells(5));
 
@@ -35,6 +36,11 @@ export class CaveLevel1 extends Level {
 
     const rod = new Rod(gridCells(9), gridCells(6));
     this.addChild(rod);
+
+    const npc = new NPC({
+      position: new Vector2(gridCells(5), gridCells(5)),
+    });
+    this.addChild(npc);
   }
 
   ready(): void {
