@@ -5,6 +5,11 @@ import { Vector2 } from "@/Vector2";
 import { getCharWidth, getCharacterFrame } from "./ExpressionFontMap";
 import { events } from "@/Events";
 
+type SpriteTextStringConfig = {
+  portraitFrame?: number;
+  string?: string;
+};
+
 export class SpriteTextString extends GameObject {
   backdrop: Sprite;
   words: {
@@ -18,8 +23,9 @@ export class SpriteTextString extends GameObject {
   finalIndex: number;
   textSpeed: number;
   timeUntilNextShow: number;
+  portrait: Sprite;
 
-  constructor(string?: string) {
+  constructor({ portraitFrame, string }: SpriteTextStringConfig) {
     super({
       position: new Vector2(32, 108),
     });
@@ -53,6 +59,13 @@ export class SpriteTextString extends GameObject {
     this.backdrop = new Sprite({
       resource: resources.images.textBox,
       frameSize: new Vector2(256, 64),
+    });
+
+    // Create a portrait
+    this.portrait = new Sprite({
+      resource: resources.images.portraits,
+      hframes: 4,
+      frame: portraitFrame ?? 0,
     });
 
     // Typewriter
@@ -90,8 +103,11 @@ export class SpriteTextString extends GameObject {
   drawImage(context: CanvasRenderingContext2D, x: number, y: number): void {
     this.backdrop.drawImage(context, x, y);
 
+    // Draw the portrait
+    this.portrait.drawImage(context, x + 4, y + 4);
+
     // Configuration options
-    const PADDING_LEFT = 7;
+    const PADDING_LEFT = 27;
     const PADDING_TOP = 4;
     const LINE_WIDTH_MAX = 240;
     const LINE_VERTICAL_HEIGHT = 14;
