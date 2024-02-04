@@ -1,17 +1,23 @@
 import { GameObject, GameObjectConfig } from "@/GameObject";
 import { resources } from "@/Resource";
 import { Sprite } from "@/Sprite";
+import { storyFlags } from "@/StoryFlags";
 import { Vector2 } from "@/Vector2";
 
+export type NPCContent = {
+  string: string;
+  requires?: string[];
+  bypass?: string[];
+  addsFlag?: string;
+};
+
 type NPCConfig = GameObjectConfig & {
-  content?: {
-    string: string;
-    portraitFrame: number;
-  };
+  content?: NPCContent[];
+  portraitFrame?: number;
 };
 
 export class NPC extends GameObject {
-  textContent: string;
+  content: NPCContent[];
   portraitFrame: number;
 
   constructor(config: NPCConfig = {}) {
@@ -21,8 +27,8 @@ export class NPC extends GameObject {
     this.isSolid = true;
 
     // Say something when interacted with
-    this.textContent = config.content?.string ?? "Hello!";
-    this.portraitFrame = config.content?.portraitFrame ?? 1;
+    this.content = config.content ?? [];
+    this.portraitFrame = config.portraitFrame ?? 1;
 
     // Shadow
     const shadow = new Sprite({
@@ -44,9 +50,16 @@ export class NPC extends GameObject {
   }
 
   getContent() {
+    const match = storyFlags.getRelevantScenario(this.content);
+    if (!match) {
+      console.warn("No matching scenario found for NPC", this.content);
+      return;
+    }
+
     return {
-      string: this.textContent,
+      string: match.string,
       portraitFrame: this.portraitFrame,
+      addsFlag: match.addsFlag,
     };
   }
 }

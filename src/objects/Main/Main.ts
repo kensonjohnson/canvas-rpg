@@ -6,6 +6,7 @@ import { Inventory } from "../Inventory/Inventory";
 import { events } from "@/Events";
 import { SpriteTextString } from "../SpriteTextString/SpriteTextString";
 import { NPC } from "../NPC/NPC";
+import { storyFlags } from "@/StoryFlags";
 
 export class Main extends GameObject {
   level?: Level;
@@ -32,6 +33,15 @@ export class Main extends GameObject {
     events.on("HERO_REQUESTS_ACTION", this, (withObject: NPC) => {
       if (typeof withObject?.getContent === "function") {
         const content = withObject.getContent();
+        if (!content) return;
+
+        // Potentially add a flag
+        if (content.addsFlag) {
+          console.log("Content adds flag", content.addsFlag);
+          storyFlags.add(content.addsFlag);
+        }
+
+        // Show the text box
         const textBox = new SpriteTextString({
           string: content.string,
           portraitFrame: content.portraitFrame,
