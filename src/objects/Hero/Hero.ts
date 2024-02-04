@@ -101,8 +101,16 @@ export class Hero extends GameObject {
 
     const input = root.input;
     if (input.getActionJustPressed("Space")) {
-      console.log("Action");
-      events.emit("HERO_REQUESTS_ACTION");
+      // Check if there is an object to interact with
+      const objectAtPosition = this.parent?.children.find((child) => {
+        return child.position.matches(
+          this.position.toNeighbor(this.facingDirection)
+        );
+      });
+
+      if (objectAtPosition) {
+        events.emit("HERO_REQUESTS_ACTION", objectAtPosition);
+      }
     }
 
     const distance = moveTowards(this, this.destinationPosition, 1);

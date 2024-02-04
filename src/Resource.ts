@@ -11,7 +11,6 @@ export class Resources {
     // Everything that we need to download
     this.toLoad = {
       hero: import.meta.env.BASE_URL + "sprites/hero-sheet.png",
-      portraits: import.meta.env.BASE_URL + "sprites/portraits-sheet.png",
       shadow: import.meta.env.BASE_URL + "sprites/shadow.png",
       rod: import.meta.env.BASE_URL + "sprites/rod.png",
       exit: import.meta.env.BASE_URL + "sprites/exit.png",
@@ -28,6 +27,7 @@ export class Resources {
       textBox: import.meta.env.BASE_URL + "sprites/text-box.png",
       fontWhite: import.meta.env.BASE_URL + "sprites/sprite-font-white.png",
       expressionWhite: import.meta.env.BASE_URL + "fonts/expression-white.png",
+      portraits: import.meta.env.BASE_URL + "sprites/portraits-sheet.png",
     };
 
     // A bucket to store the downloaded images
