@@ -70,6 +70,81 @@ export class CaveLevel1 extends Level {
       portraitFrame: 1,
     });
     this.addChild(npc2);
+
+    this.walls.add(`${gridCells(1)},${gridCells(0)}`); // Sky
+    this.walls.add(`${gridCells(2)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(3)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(4)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(5)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(6)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(7)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(8)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(9)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(10)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(11)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(12)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(13)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(14)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(15)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(16)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(17)},${gridCells(0)}`);
+    this.walls.add(`${gridCells(18)},${gridCells(1)}`);
+    this.walls.add(`${gridCells(18)},${gridCells(2)}`);
+    this.walls.add(`${gridCells(18)},${gridCells(3)}`);
+    this.walls.add(`${gridCells(18)},${gridCells(4)}`);
+    this.walls.add(`${gridCells(18)},${gridCells(5)}`);
+    this.walls.add(`${gridCells(18)},${gridCells(6)}`);
+    this.walls.add(`${gridCells(18)},${gridCells(7)}`);
+    this.walls.add(`${gridCells(17)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(16)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(15)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(14)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(13)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(12)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(11)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(10)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(9)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(8)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(7)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(6)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(5)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(4)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(3)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(2)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(1)},${gridCells(8)}`);
+    this.walls.add(`${gridCells(1)},${gridCells(7)}`);
+    this.walls.add(`${gridCells(1)},${gridCells(6)}`);
+    this.walls.add(`${gridCells(1)},${gridCells(5)}`);
+    this.walls.add(`${gridCells(1)},${gridCells(4)}`);
+    this.walls.add(`${gridCells(1)},${gridCells(3)}`);
+    this.walls.add(`${gridCells(1)},${gridCells(2)}`);
+    this.walls.add(`${gridCells(1)},${gridCells(1)}`);
+
+    this.walls.add(`${gridCells(3)},${gridCells(1)}`); // Squares
+    this.walls.add(`${gridCells(4)},${gridCells(1)}`);
+    this.walls.add(`${gridCells(5)},${gridCells(3)}`);
+    this.walls.add(`${gridCells(6)},${gridCells(3)}`);
+    this.walls.add(`${gridCells(8)},${gridCells(3)}`);
+    this.walls.add(`${gridCells(6)},${gridCells(4)}`);
+    this.walls.add(`${gridCells(7)},${gridCells(4)}`);
+    this.walls.add(`${gridCells(12)},${gridCells(5)}`);
+    this.walls.add(`${gridCells(13)},${gridCells(5)}`);
+    this.walls.add(`${gridCells(14)},${gridCells(6)}`);
+
+    this.walls.add(`${gridCells(9)},${gridCells(1)}`); // Rocks
+    this.walls.add(`${gridCells(12)},${gridCells(2)}`);
+    this.walls.add(`${gridCells(13)},${gridCells(2)}`);
+    this.walls.add(`${gridCells(13)},${gridCells(3)}`);
+    this.walls.add(`${gridCells(16)},${gridCells(5)}`);
+
+    this.walls.add(`${gridCells(15)},${gridCells(2)}`); // Water
+    this.walls.add(`${gridCells(16)},${gridCells(2)}`);
+    this.walls.add(`${gridCells(6)},${gridCells(6)}`);
+    this.walls.add(`${gridCells(7)},${gridCells(6)}`);
+    this.walls.add(`${gridCells(8)},${gridCells(6)}`);
+    this.walls.add(`${gridCells(11)},${gridCells(6)}`);
+    this.walls.add(`${gridCells(12)},${gridCells(6)}`);
+    this.walls.add(`${gridCells(13)},${gridCells(6)}`);
   }
 
   ready(): void {
