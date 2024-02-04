@@ -5,6 +5,7 @@ import { Level } from "../Level/Level";
 import { Inventory } from "../Inventory/Inventory";
 import { events } from "@/Events";
 import { SpriteTextString } from "../SpriteTextString/SpriteTextString";
+import { NPC } from "../NPC/NPC";
 
 export class Main extends GameObject {
   level?: Level;
@@ -28,18 +29,22 @@ export class Main extends GameObject {
     });
 
     // Listen for hero action requests
-    events.on("HERO_REQUESTS_ACTION", this, () => {
-      const textBox = new SpriteTextString(
-        "Hi! I'm a text box! I can display text! Some more text to test the line wrapping. I hope it works! I'm not sure if it will! I guess we'll see!"
-      );
-      this.addChild(textBox);
-      events.emit("START_TEXT_BOX");
+    events.on("HERO_REQUESTS_ACTION", this, (withObject: NPC) => {
+      if (typeof withObject?.getContent === "function") {
+        const content = withObject.getContent();
+        const textBox = new SpriteTextString({
+          string: content.string,
+          portraitFrame: content.portraitFrame,
+        });
+        this.addChild(textBox);
+        events.emit("START_TEXT_BOX");
 
-      // Unsubscribe when the text box is done
-      const endingSub = events.on("END_TEXT_BOX", this, () => {
-        textBox.destroy();
-        events.off(endingSub);
-      });
+        // Unsubscribe when the text box is done
+        const endingSub = events.on("END_TEXT_BOX", this, () => {
+          textBox.destroy();
+          events.off(endingSub);
+        });
+      }
     });
   }
 
