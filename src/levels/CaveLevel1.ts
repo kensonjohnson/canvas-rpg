@@ -37,10 +37,23 @@ export class CaveLevel1 extends Level {
     const rod = new Rod(gridCells(9), gridCells(6));
     this.addChild(rod);
 
-    const npc = new NPC({
+    const npc1 = new NPC({
       position: new Vector2(gridCells(5), gridCells(5)),
+      content: {
+        string: "You've met a knight!",
+        portraitFrame: 1,
+      },
     });
-    this.addChild(npc);
+    this.addChild(npc1);
+
+    const npc2 = new NPC({
+      position: new Vector2(gridCells(9), gridCells(5)),
+      content: {
+        string: "You've met another knight!",
+        portraitFrame: 1,
+      },
+    });
+    this.addChild(npc2);
   }
 
   ready(): void {
