@@ -9,6 +9,7 @@ import { Level, LevelConfig } from "@/objects/Level/Level";
 import { Rod } from "@/objects/Rod/Rod";
 import { OutdoorLevel1 } from "./OutdoorLevel1";
 import { NPC } from "@/objects/NPC/NPC";
+import { TALKED_TO_NPC_A, TALKED_TO_NPC_B } from "@/StoryFlags";
 
 const DEFAULT_HERO_POSITION = new Vector2(gridCells(6), gridCells(5));
 
@@ -39,19 +40,34 @@ export class CaveLevel1 extends Level {
 
     const npc1 = new NPC({
       position: new Vector2(gridCells(5), gridCells(5)),
-      content: {
-        string: "You've met a knight!",
-        portraitFrame: 1,
-      },
+      content: [
+        {
+          string: "I just can't stand that guy.",
+          requires: [TALKED_TO_NPC_B],
+          bypass: [TALKED_TO_NPC_A],
+          addsFlag: TALKED_TO_NPC_A,
+        },
+        {
+          string: "He is just the worst!",
+          requires: [TALKED_TO_NPC_A],
+        },
+        {
+          string: "Grumble grumble. Another day at work.",
+        },
+      ],
+      portraitFrame: 1,
     });
     this.addChild(npc1);
 
     const npc2 = new NPC({
       position: new Vector2(gridCells(9), gridCells(5)),
-      content: {
-        string: "You've met another knight!",
-        portraitFrame: 1,
-      },
+      content: [
+        {
+          string: "What a wonderful day at work in the cave!",
+          addsFlag: TALKED_TO_NPC_B,
+        },
+      ],
+      portraitFrame: 1,
     });
     this.addChild(npc2);
   }
